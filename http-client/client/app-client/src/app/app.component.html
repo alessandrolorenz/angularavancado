@@ -1,0 +1,203 @@
+<mat-toolbar color='primary' class="mat-elevation-z8">
+  <span>Examples os HTTP Request</span>
+</mat-toolbar>
+<br>
+<hr><br>
+
+<mat-card class="mat-elevation-z8">
+  <mat-card-header>
+    <mat-card-title>Lista de Produtos</mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <mat-list *ngIf="simpleReqProductObservable$ | async as prod">
+      <mat-list-item *ngFor="let p of prod">
+        <mat-icon mat-list-icon>shop</mat-icon>
+        <h3 mat-line>{{p.name}}</h3>
+        <h4 mat-line>Department: {{p.department}} - $ {{p.price}}</h4>
+      </mat-list-item>
+    </mat-list>
+
+  </mat-card-content>
+  <mat-card-actions>
+    <button mat-button color="primary" (click)="getSimpleHttpRequest()">
+      <mat-icon>swap_vert</mat-icon> Send Request
+    </button>
+  </mat-card-actions>
+  <mat-card-footer>
+  </mat-card-footer>
+</mat-card>
+
+
+<mat-card class="mat-elevation-z8">
+  <mat-card-header>
+    <mat-card-title>HTTP GET - Error handling</mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <ul *ngIf="productsErrorHandling">
+      <li *ngFor="let p of productsErrorHandling">{{p.name}}</li>
+    </ul>
+
+  </mat-card-content>
+  <mat-card-actions>
+    <button mat-button color="accent" (click)="getProductWithErrorHandling()">
+      <mat-icon>swap_vert</mat-icon> Error Request
+    </button>
+    <button mat-button color="primary" (click)="getProductWithErrorHandlingOk()">
+      <mat-icon>swap_vert</mat-icon> Sucess Request
+    </button>
+  </mat-card-actions>
+  <mat-card-footer>
+  </mat-card-footer>
+</mat-card>
+
+
+
+
+<mat-card class="mat-elevation-z8">
+  <mat-card-header>
+    <mat-card-title>HTTP GET - Loading</mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <ul *ngIf="productsLoading">
+      <li *ngFor="let p of productsLoading">{{p.name}}</li>
+    </ul>
+
+  </mat-card-content>
+  <mat-card-actions>
+    <button mat-button color="accent" (click)="getProductsLoading()">
+      <mat-icon>swap_vert</mat-icon> Loading Request
+    </button>
+
+  </mat-card-actions>
+  <mat-card-footer>
+    <mat-progress-bar mode="query" *ngIf="bLoading"></mat-progress-bar>
+  </mat-card-footer>
+</mat-card>
+
+
+
+<mat-card class="mat-elevation-z8">
+  <mat-card-header>
+    <mat-card-title>HTTP GET - Getting text from server</mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <mat-list *ngIf="productsIds">
+      <mat-list-item *ngFor="let p of productsIds; let i = index">
+        <mat-icon mat-list-icon>shop</mat-icon>
+        <h4 mat-line *ngIf="p.name != ''">{{p.name}}</h4>
+        <h4 mat-line *ngIf="p.name == ''">{{i}}</h4>
+        <button mat-list-button color="red" (click)="loadName(p._id)" *ngIf="p.name == ''">
+          <mat-icon>refresh</mat-icon>
+        </button>
+      </mat-list-item>
+    </mat-list>
+
+  </mat-card-content>
+  <mat-card-actions>
+    <button mat-button color="accent" (click)="getProductsIds()">
+      <mat-icon>swap_vert</mat-icon> Get Ids
+    </button>
+
+  </mat-card-actions>
+  <mat-card-footer>
+
+  </mat-card-footer>
+</mat-card>
+
+
+
+
+
+<mat-card class="mat-elevation-z8">
+  <mat-card-header>
+    <mat-card-title>HTTP Post Request</mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+
+    <div >
+
+      <mat-form-field>
+        <input matInput placeholder="Product Name" value="" type="text" #name>
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput placeholder="Department" value="" type="text" #dep>
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput placeholder="Price" value="" type="number" #price>
+      </mat-form-field>
+
+    </div>
+
+  </mat-card-content>
+  <mat-card-actions>
+    <button mat-button color="primary" (click)="saveProduct(name.value, dep.value, price.value)">
+      <mat-icon>save</mat-icon> Save
+    </button>
+  </mat-card-actions>
+  <mat-card-footer>
+    <mat-chip-list>
+      <mat-chip *ngFor="let p of newlyProducts" style="margin-left: 10px; margin-bottom: 10px;">
+        {{p.name}}
+      </mat-chip>
+    </mat-chip-list>
+  </mat-card-footer>
+</mat-card>
+
+
+
+
+
+<mat-card class="mat-elevation-z8">
+  <mat-card-header>
+    <mat-card-title>HTTP delete</mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <mat-list>
+      <mat-list-item *ngFor="let p of prodToDelete">
+        <mat-icon mat-list-icon>shop</mat-icon>
+        <h3 mat-line>{{p.name}}</h3>
+        <h4 mat-line>Department: {{p.department}} - $ {{p.price}}</h4>
+        <button mat-button (click)="deleteProduct(p)">
+          <mat-icon>delete</mat-icon>
+        </button>
+      </mat-list-item>
+    </mat-list>
+
+  </mat-card-content>
+  <mat-card-actions>
+    <button mat-button color="primary" (click)="loadProductsToDelete()">
+      <mat-icon>swap_vert</mat-icon> Load Products
+    </button>
+  </mat-card-actions>
+  <mat-card-footer>
+  </mat-card-footer>
+</mat-card>
+
+
+
+
+<mat-card class="mat-elevation-z8">
+  <mat-card-header>
+    <mat-card-title>HTTP Edit</mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <mat-list>
+      <mat-list-item *ngFor="let p of productsToEdit">
+        <mat-icon mat-list-icon>shop</mat-icon>
+        <h3 mat-line>{{p.name}}</h3>
+        <h4 mat-line>Department: {{p.department}} - {{p.price | currency: '$'}}</h4>
+        <button mat-button (click)="editProduct(p)">
+          <mat-icon>Edit</mat-icon>
+        </button>
+      </mat-list-item>
+    </mat-list>
+
+  </mat-card-content>
+  <mat-card-actions>
+    <button mat-button color="primary" (click)="loadProductsToEdit()">
+      <mat-icon>swap_vert</mat-icon> Load Products
+    </button>
+  </mat-card-actions>
+  <mat-card-footer>
+  </mat-card-footer>
+</mat-card>
